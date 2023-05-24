@@ -9,6 +9,10 @@ public class Problem2 {
         int b = input.nextInt();
         int c = input.nextInt();
 
+        Rational x = new Rational(-a, 2 * b);
+        Rational y = new Rational(4*a*c - b^2, 4*a);
+
+        System.out.println("h is " + x.toString() + " k is " + y.toString());
         /*
           Rational class를 참고하여 코드 작성
         */
@@ -17,21 +21,21 @@ public class Problem2 {
   
     static class Rational extends Number implements Comparable<Rational> {
         // Data fields for numerator and denominator
-        private long[] r = new long[2];
+        private long[] r = new long[2]; //분모와 분자 입력받음
 
         /**Default constructor*/
-        public Rational() {
+        public Rational() { //구조체 기본값. 없으면 분 0, 분ㅗ 1임
             this(0, 1);
         }
 
-        /**Construct a rational with specified numerator and denominator*/
-        public Rational(long numerator, long denominator) {
+        //r0과 r1에 분모 분자의 최고공약수인 gcd로 나눔
+        public Rational(long numerator, long denominator) { 
             long gcd = gcd(numerator, denominator);
             this.r[0] = numerator/gcd;
             this.r[1] = denominator/gcd;
         }
 
-        /**Find GCD of two numbers*/
+        /*분모 분자의 수를 입력받아서 최소공약수인 gcd를 구함*/
         private long gcd(long n, long d) {
             long t1 = Math.abs(n);
             long t2 = Math.abs(d);
@@ -46,17 +50,19 @@ public class Problem2 {
             return t2;
         }
 
-        /**Return numerator*/
+        /*분자 소환*/
         public long getNumerator() {
             return r[0];
         }
 
-        /**Return denominator*/
+        /*분모 소환*/
         public long getDenominator() {
             return r[1];
         }
 
-        /**Add a rational number to this rational*/
+        /*분모와 분자를 정하는 계산. b/2a에서 분자인 b와 분모인 a를 구한다는 뜻.*/
+
+        /*값 2개 받아서 */
         public Rational add(Rational secondNewRational) {
             long n = r[0]*secondNewRational.getDenominator() +
                     r[1]*secondNewRational.getNumerator();
@@ -87,7 +93,7 @@ public class Problem2 {
         }
 
         @Override
-        public String toString() {
+        public String toString() { //분모가 1이 아니니까 분수형태로 출력
             if (r[1] == 1)
                 return r[0] + "";
             else
